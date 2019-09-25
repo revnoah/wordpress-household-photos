@@ -1,0 +1,35 @@
+{
+  "name": "wordpress-household-photos",
+  "version": "1.0.0",
+  "description": "WordPress plugin to view personal photos",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-notify": "^3.2.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-zip": "^4.2.0"
+  },
+  "scripts": {
+    "build": "phpcs && gulp",
+    "test": "phpcs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/revnoah/wordpress-household-photos.git"
+  },
+  "keywords": [
+    "wordpress",
+    "plugin",
+    "photo",
+    "album"
+  ],
+  "author": "Noah J. Stewart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/revnoah/wordpress-household-photos/issues"
+  },
+  "homepage": "https://github.com/revnoah/wordpress-household-photos#readme"
+}
