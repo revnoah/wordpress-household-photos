@@ -27,7 +27,7 @@ var cleanCSS = require('gulp-clean-css');
 var testPath = '../wptest/wp-content/plugins';
 var sourcePath = 'source';
 var buildPath = 'build';
-var fileName = 'wordpress-household-photos';
+var fileName = 'household-photos';
 
 /**
  * create css file from scss files

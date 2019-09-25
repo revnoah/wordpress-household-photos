@@ -8,9 +8,9 @@ function household_photos_create_db() {
 	global $wpdb;
 	$version = get_option( 'householdphotos_version', '1.0.0' );
 	$charset_collate = $wpdb->get_charset_collate();
-    $table_photos_photos = $wpdb->prefix . 'household_photos_photos';
-    $table_photos_albums = $wpdb->prefix . 'household_photos_albums';
-    $table_photos_album_photo = $wpdb->prefix . 'household_photos_album_photo';
+  $table_photos_photos = $wpdb->prefix . 'household_photos_photos';
+  $table_photos_albums = $wpdb->prefix . 'household_photos_albums';
+  $table_photos_album_photo = $wpdb->prefix . 'household_photos_album_photo';
 
 	$sql = "CREATE TABLE $table_photos_photos (
 		ID bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -38,11 +38,13 @@ function household_photos_create_db() {
     photo_id bigint(20) unsigned NOT NULL,
     album_id bigint(20) unsigned NOT NULL,
     featured tinyint(1) unsigned NOT NULL DEFAULT 0,
-    CONSTRAINT fk_household_photos_temp_photo_id
+    created timestamp DEFAULT CURRENT_TIMESTAMP,
+		UNIQUE KEY id (ID),
+    CONSTRAINT fk_household_photos_photo_id
       FOREIGN KEY (photo_id)
       REFERENCES {$table_photos_photos}(ID)
       ON DELETE CASCADE,
-    CONSTRAINT fk_household_photos_temp_album_id
+    CONSTRAINT fk_household_photos_album_id
       FOREIGN KEY (album_id)
       REFERENCES {$table_photos_albums}(ID)
       ON DELETE CASCADE    
