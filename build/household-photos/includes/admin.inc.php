@@ -50,6 +50,33 @@ add_action('admin_menu', 'household_photos_create_menu');
  * @return void
  */
 function household_photos_create_menu() {
+	add_menu_page(
+		'Household Photos',
+		'Household Photos',
+		'administrator',
+		'household-photos',
+		'household_photos_admin'
+	);
+
+	add_submenu_page(
+		'household-photos',
+		'Photo Albums',
+		'Photo Albums',
+		'administrator',
+		'household-photos-albums',
+		'household_photos_albums'
+	);
+
+	add_submenu_page(
+		'household-photos',
+		'Import Photos',
+		'Import Photos',
+		'administrator',
+		'household-photos-import',
+		'household_photos_import'
+	);
+
+	/*
 	add_submenu_page(
 		'options-general.php',
 		'Household Photos',
@@ -59,6 +86,7 @@ function household_photos_create_menu() {
 		'household_photos_admin',
 		plugins_url('/images/icon.png', __FILE__)
 	);
+	*/
 }
 
 /**

@@ -1,81 +1,89 @@
 <?php
 
 /**
- * Added classes based on settings
+ * Get template part from user theme falling back to plugin folder
  *
- * @return string[] classes
+ * @param string $template_name   Name of content template partial
+ * @param string $prefix File prefix of template
+ * @return string
  */
-function household_photos_get_classes() {
-	$classes = [];
-	$current_user = wp_get_current_user();
-	$user_role = _household_photos_get_user_role($current_user);
-	$user_name = _household_photos_get_user_name($current_user);
-	$user_id = _household_photos_get_user_id($current_user);
+function household_photos_get_template_part(string $template_slug, string $prefix = 'page'): string {
+	$template_name = $prefix . '-' . $template_slug . '.php';
 
-	if($user_role) {
-		$classes = $user_role;
-	}
-	if($user_name) {
-		$classes[] = $user_name;
-	}
-	if($user_id) {
-		$classes[] = $user_id;
-	}
+	$new_template = household_photos_locate_template([$template_name], true, false);
 
-	return $classes;
+	return $new_template;
 }
 
 /**
- * Get role
+ * Locate template that searches within template folder
  *
- * @param WP_User $current_user WordPress user returned from current_user()
- * @return string[]
+ * @param array $template_names array of template names 
+ * @param boolean $load load the template
+ * @param boolean $require_once require once when loading template
+ * @return string
  */
-function _household_photos_get_user_role($current_user) {
-	$classes = [];
-	$household_photos_add_roles 
-		= get_option('household_photos_add_roles', true);
+function household_photos_locate_template(
+		array $template_names, 
+		bool $load = false, 
+		bool $require_once = true 
+	):string {
+	$located = '';
 
-	if($household_photos_add_roles) {
-		foreach ($current_user->roles as $role) {
-			$classes[] = 'user-role-' . $role;
+	//loop through templates
+	foreach ((array)$template_names as $template_name) {
+		if (!$template_name) {
+			continue;
+		}
+
+		//default template locations with additional template folders
+		$template_locations = [
+			STYLESHEETPATH . '/' . $template_name,
+			STYLESHEETPATH . '/templates/' . $template_name,
+			STYLESHEETPATH . '/template_parts/' . $template_name,
+			TEMPLATEPATH . '/' . $template_name,
+			TEMPLATEPATH . '/templates/' . $template_name,
+			TEMPLATEPATH . '/template_parts/' . $template_name,
+			ABSPATH . WPINC . '/theme-compat/' . $template_name,
+			PLUGIN_DIR . '/templates/' . $template_name,
+			PLUGIN_DIR . '/template_parts/' . $template_name
+		];
+
+		//loop through template locations
+		foreach(array_unique($template_locations) as $template_location) {
+			if (file_exists($template_location)) {
+				$located = str_replace(ABSPATH, '', $template_location);
+				break;
+			}
 		}
 	}
 
-	return $classes;
+	//load template
+	if ($load && $located != '') {
+		load_template($located, $require_once);
+	}
+
+	return $located;
 }
 
 /**
- * Get user name
+ * Get request vars from whitelist array of keys
  *
- * @param WP_User $current_user WordPress user returned from current_user()
- * @return string
+ * @param array $keys Whitelist array of keys
+ * @param string $method Method, defaults to POST
+ * @return array
  */
-function _household_photos_get_user_name($current_user) {
-	$classes = '';
-	$household_photos_add_user_name 
-		= get_option('household_photos_add_user_name', false);
+function household_photos_get_request_vars(array $keys, string $method = 'POST'): array {
+	$array = [];
 
-	if ($household_photos_add_user_name) {
-		return 'user-name-' . $current_user->display_name;
+	//loop through keys and get the fields we've whitelisted
+	foreach ($keys as $key) {
+		if (strtoupper($method) == 'POST' && isset($_POST[$key]) && $_POST[$key] != '') {
+			$array[$key] = sanitize_text_field($_POST[$key]);
+		} elseif (strtoupper($method) == 'GET' && isset($_GET[$key]) && $_GET[$key] != '') {
+			$array[$key] = sanitize_text_field($_GET[$key]);
+		}
 	}
-	
-	return false;
-}
 
-/**
- * Get user ID
- *
- * @param WP_User $current_user WordPress user returned from current_user()
- * @return string
- */
-function _household_photos_get_user_id($current_user) {
-	$household_photos_add_user_id 
-		= get_option('household_photos_add_user_id', false);
-
-	if ($household_photos_add_user_id) {
-		return 'user-id-' . $current_user->ID;
-	}
-	
-	return false;
+	return $array;
 }

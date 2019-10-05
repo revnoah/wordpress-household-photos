@@ -11,6 +11,9 @@
  * @since Twenty Sixteen 1.0
  */
 
+echo ' page name: ' . $pagename;
+echo ' album: ' . $album;
+
 print_r($errors);
 
 get_header(); ?>
@@ -28,16 +31,15 @@ get_header(); ?>
 
 	<article class="post type-post status-publish format-standard hentry category-uncategorized entry">
 			<header class="entry-header">
-				<h2 class="entry-title">Finish Signup</h2>
+				<h2 class="entry-title">Household Photos</h2>
 			</header>
 			<div class="entry-content">
 				<p class="description text-muted">
-					Your account is almost ready to go. Just finish filling out this 
-					info to get started.
+					Getting ready to display your household photos.
 				</p>
 				<?php
 					// Include the page content template.
-					invite_user_link_get_template_part('invite-user-link', 'content');
+					household_photos_get_template_part('household-photos', 'content');
 				?>
 			</div>
 		</article>
