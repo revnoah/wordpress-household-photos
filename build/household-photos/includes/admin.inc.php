@@ -17,6 +17,13 @@ function household_photos_settings_fields() {
 			'description' => 
 				__('Photo path, relative to the wp-content folder'),
 			'type' => 'text'
+		],
+		[
+			'id' => 'household_photos_thumb_path',
+			'label' => __('Thumbnail Path'),
+			'description' => 
+				__('Thumbnail path, relative to the wp-content folder'),
+			'type' => 'text'
 		]
 	];
 	foreach ($roles as $key => $role) {

@@ -4,8 +4,10 @@
     </description>
 
     <!-- files to check -->
-    <file>source/enhanced-body-class.php</file>
+    <file>source/household-photos.php</file>
     <file>source/includes</file>
+    <file>source/templates</file>
+    <file>source/template_parts</file>
 
     <!-- WordPress standards are close to PSR1 -->
     <rule ref="PSR1">

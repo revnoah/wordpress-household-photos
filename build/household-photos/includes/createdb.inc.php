@@ -34,10 +34,6 @@ function household_photos_create_db() {
     created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated timestamp NULL DEFAULT CURRENT_TIMESTAMP,
 		UNIQUE KEY id (ID)
-    CONSTRAINT fk_household_photos_location_id
-      FOREIGN KEY (location_id)
-      REFERENCES {$table_photos_album_locations}(ID)
-      ON DELETE SET NULL   
   ) $charset_collate;
   CREATE TABLE $table_photos_albums (
     ID bigint(20) unsigned NOT NULL AUTO_INCREMENT,

@@ -11,23 +11,10 @@
  * @since Twenty Sixteen 1.0
  */
 
-echo ' page name: ' . $pagename;
-echo ' album: ' . $album;
-
-print_r($errors);
-
 get_header(); ?>
 
 <div id="primary" class="content-area">
 	<main id="main" class="site-main" role="main">
-
-	<div class="alert alert-error">
-	<?php		
-	foreach ($errors as $error) {
-		echo '<p>' . $error . '</p>';
-	}
-	?>
-	</div>
 
 	<article class="post type-post status-publish format-standard hentry category-uncategorized entry">
 			<header class="entry-header">

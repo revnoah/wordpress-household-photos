@@ -39,7 +39,8 @@ function household_photos_rewrite_activation() {
 	flush_rewrite_rules();
 }
 
-add_action( 'init', 'household_photos_rewrite_add_rewrites' );
+add_action('init', 'household_photos_rewrite_add_rewrites');
+//add_action('init', 'household_photos_stylesheet');
 
 /**
  * Add rewrites
@@ -52,6 +53,18 @@ function household_photos_rewrite_add_rewrites() {
 	'index.php?pagename=household-photos&album=$matches[1]',
 	'top'
   );
+}
+
+add_action('wp_enqueue_scripts', 'household_photos_scripts');
+
+/**
+ * Load plugin scripts
+ *
+ * @return void
+ */
+function household_photos_scripts() {
+	wp_enqueue_style('household-photos-style', site_url() . '/wp-content/plugins/household-photos/css/style.min.css');
+	wp_enqueue_script('household-photos-script', site_url() . '/wp-content/plugins/household-photos/js/script.js', array('jquery'));
 }
 
 /**
@@ -106,9 +119,8 @@ function household_photos_catch_vars(): void {
 
 	$pagename = get_query_var('pagename');
 	$album = get_query_var('album');
+	$errors = [];
  
-	echo 'album: ' . $album;
-
 	if ($pagename !== 'household-photos') {
 		return;
 	}

@@ -59,11 +59,11 @@ gulp.task('copy', async function () {
 });
 
 /**
- * copy all of source over to test path in subfolder
+ * copy all of build over to test path in subfolder
  */
 gulp.task('test', async function () {
-  gulp.src(sourcePath + '/**')
-    .pipe(gulp.dest(testPath + '/' + fileName + '/'));
+  gulp.src(buildPath + '/**')
+    .pipe(gulp.dest(testPath + '/'));
 });
 
 /**
@@ -81,7 +81,7 @@ gulp.task('publish', async function () {
     .pipe(notify({ title: "Gulp - Publish", message: "WordPress plugin SVN directory updated" }));
 });
 
-gulp.task('default', gulp.series('zippy', 'copy', 'test'));
+gulp.task('default', gulp.series('sassy', 'zippy', 'copy', 'test'));
 
 /**
  * watch php files and process scripts
