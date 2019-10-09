@@ -105,7 +105,7 @@ function household_photos_get_thumbnail(string $filename): string {
 	household_photos_save_image($destination, $thumbpath, $image_type);
 	imagedestroy($destination);
 
-	return $thumbpath;
+	return '/' . $thumbpath;
 }
 
 /**

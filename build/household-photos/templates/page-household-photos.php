@@ -27,6 +27,9 @@ get_header(); ?>
 				<?php
 					// Include the page content template.
 					household_photos_get_template_part('household-photos', 'content');
+
+					// Include the page content template.
+					household_photos_get_template_part('lightbox', 'content');
 				?>
 			</div>
 		</article>
